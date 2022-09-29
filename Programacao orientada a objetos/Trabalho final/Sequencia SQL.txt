@@ -1,0 +1,60 @@
+create schema vendas;
+
+create table vendas.empresa
+(
+	idempresa serial primary key,
+	nomeempresa varchar(100)
+);
+
+create table vendas.produto
+(
+	idproduto serial primary key,
+	nomeproduto varchar(100),
+	custo double precision,
+	valorunitario double precision
+);
+
+create table vendas.endereco
+(
+	idendereco serial primary key,
+	numeroendereco varchar (10),
+	logradouro varchar(160),
+	complemento varchar(10),
+	bairro varchar (100),
+	cidade varchar (100),
+	cep varchar(8)
+);
+
+create table vendas.cliente
+(
+	idcliente serial primary key,
+	nome varchar (100),
+	cpf varchar(11),
+	idendereco integer references vendas.endereco (idendereco),
+	telefone varchar (11)
+);
+
+create table vendas.pedido
+(
+	idpedido serial primary key,
+	idcliente integer references vendas.cliente (idcliente),
+	valortotal double precision, 
+	dataemissao varchar (11)
+);
+
+create table vendas.pedidoitem
+(
+	idpedidoiten serial primary key,
+	idpedido integer references vendas.pedido (idpedido),
+	idproduto integer references vendas.produto(idproduto),
+	valorvendaunidade double precision,
+	quantidadeproduto double precision,
+	valordesconto double precision,
+	porcentagemdesconto double precision
+);
+
+insert into vendas.empresa (nomeempresa) values
+('Grupo5 SA');
+
+
+
